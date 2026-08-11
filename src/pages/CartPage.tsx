@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { Link } from 'react-router-dom'
 import { useAppDispatch, useAppSelector } from '../app/hooks'
 import {
   removeFromCart,
@@ -11,25 +12,39 @@ import './CartPage.css'
 function CartPage() {
   const dispatch = useAppDispatch()
   const items = useAppSelector((state) => state.cart.items)
-  const [showSuccess, setShowSuccess] = useState(false)
+  const [isConfirming, setIsConfirming] = useState(false)
+  const [successMessage, setSuccessMessage] = useState<string | null>(null)
 
   const subtotal = items.reduce((sum, item) => sum + item.price * item.quantity, 0)
+  const itemCount = items.reduce((sum, item) => sum + item.quantity, 0)
 
-  const handleCheckout = () => {
-    setShowSuccess(true)
+  const handleCheckoutClick = () => {
+    if (!isConfirming) {
+      setIsConfirming(true)
+      return
+    }
+    setSuccessMessage(
+      `${itemCount} item${itemCount === 1 ? '' : 's'}, € ${subtotal.toFixed(2)} — order placed successfully!`,
+    )
     dispatch(clearCart())
-    setTimeout(() => setShowSuccess(false), 3000)
+    setIsConfirming(false)
+    setTimeout(() => setSuccessMessage(null), 4000)
+  }
+
+  const handleCancelCheckout = () => {
+    setIsConfirming(false)
   }
 
   if (items.length === 0) {
     return (
       <div className="cart-page">
         <h1 className="cart-page__heading">Your Cart</h1>
-        {showSuccess && (
-          <div className="cart-toast">Order placed successfully!</div>
-        )}
+        {successMessage && <div className="cart-toast">{successMessage}</div>}
         <div className="cart-page__empty">
           <p>Your cart is empty.</p>
+          <Link to="/" className="cart-page__continue-link">
+            Continue Shopping
+          </Link>
         </div>
       </div>
     )
@@ -38,9 +53,7 @@ function CartPage() {
   return (
     <div className="cart-page">
       <h1 className="cart-page__heading">Your Cart</h1>
-      {showSuccess && (
-        <div className="cart-toast">Order placed successfully!</div>
-      )}
+      {successMessage && <div className="cart-toast">{successMessage}</div>}
       <div className="cart-page__layout">
         <div className="cart-page__items">
           {items.map((item) => (
@@ -55,6 +68,7 @@ function CartPage() {
                   type="button"
                   className="cart-item__qty-btn"
                   onClick={() => dispatch(decrementQuantity(item.id))}
+                  disabled={item.quantity <= 1}
                   aria-label="Decrease quantity"
                 >
                   −
@@ -64,6 +78,7 @@ function CartPage() {
                   type="button"
                   className="cart-item__qty-btn"
                   onClick={() => dispatch(incrementQuantity(item.id))}
+                  disabled={item.quantity >= item.stock}
                   aria-label="Increase quantity"
                 >
                   +
@@ -98,13 +113,35 @@ function CartPage() {
             <span>Total</span>
             <span>€ {subtotal.toFixed(2)}</span>
           </div>
-          <button
-            type="button"
-            className="cart-summary__checkout-btn"
-            onClick={handleCheckout}
-          >
-            Checkout
-          </button>
+          {isConfirming ? (
+            <div className="cart-summary__confirm">
+              <p className="cart-summary__confirm-text">Place this order?</p>
+              <div className="cart-summary__confirm-actions">
+                <button
+                  type="button"
+                  className="cart-summary__checkout-btn"
+                  onClick={handleCheckoutClick}
+                >
+                  Confirm
+                </button>
+                <button
+                  type="button"
+                  className="cart-summary__cancel-btn"
+                  onClick={handleCancelCheckout}
+                >
+                  Cancel
+                </button>
+              </div>
+            </div>
+          ) : (
+            <button
+              type="button"
+              className="cart-summary__checkout-btn"
+              onClick={handleCheckoutClick}
+            >
+              Checkout
+            </button>
+          )}
         </div>
       </div>
     </div>

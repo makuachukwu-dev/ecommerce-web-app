@@ -12,6 +12,7 @@ interface ProductCardProps {
 function ProductCard({ product, onAdded }: ProductCardProps) {
   const dispatch = useAppDispatch()
   const [isWishlisted, setIsWishlisted] = useState(false)
+  const [isComparing, setIsComparing] = useState(false)
   const isOutOfStock = product.availabilityStatus === 'Out of Stock' || product.stock === 0
   const hasDiscount = product.discountPercentage > 0
   const discountedPrice = product.price - (product.price * product.discountPercentage) / 100
@@ -27,16 +28,24 @@ function ProductCard({ product, onAdded }: ProductCardProps) {
     setIsWishlisted((prev) => !prev)
   }
 
+  const handleToggleCompare = () => {
+    setIsComparing((prev) => !prev)
+  }
+
   return (
     <div className="product-card">
       <div className="product-card__image-wrap">
-        <img src={product.thumbnail} alt={product.title} className="product-card__image" />
-        {isOutOfStock && (
-          <span className="product-card__badge product-card__badge--stock">
-            Out of stock
-          </span>
-        )}
+        <img
+          src={product.thumbnail}
+          alt={product.title}
+          className={`product-card__image${isOutOfStock ? ' product-card__image--fade' : ''}`}
+        />
         <div className="product-card__hover-content">
+          {isOutOfStock && (
+            <span className="product-card__badge product-card__badge--stock">
+              Out of stock
+            </span>
+          )}
           {hasDiscount && !isOutOfStock && (
             <span className="product-card__badge product-card__badge--discount">
               -{Math.round(product.discountPercentage)}%
@@ -45,8 +54,9 @@ function ProductCard({ product, onAdded }: ProductCardProps) {
           <div className="product-card__icon-group">
             <button
               type="button"
-              className="product-card__icon-btn"
+              className={`product-card__icon-btn${isComparing ? ' product-card__icon-btn--active' : ''}`}
               aria-label="Compare product"
+              onClick={handleToggleCompare}
             >
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                 <polyline points="17 1 21 5 17 9" />
@@ -103,7 +113,7 @@ function ProductCard({ product, onAdded }: ProductCardProps) {
         onClick={handleAddToCart}
         disabled={isOutOfStock}
       >
-        {isOutOfStock ? 'Out of stock' : 'Add to basket'}
+        Add to basket
       </button>
     </div>
   )

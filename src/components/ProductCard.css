@@ -21,6 +21,14 @@
   object-fit: contain;
 }
 
+.product-card__image--fade {
+  transition: opacity 0.15s ease;
+}
+
+.product-card:hover .product-card__image--fade {
+  opacity: 0.4;
+}
+
 .product-card__badge {
   position: absolute;
   padding: 4px 8px;
@@ -56,7 +64,7 @@
 
 .product-card__icon-group {
   position: absolute;
-  top: 8px;
+  bottom: 8px;
   right: 8px;
   display: flex;
   flex-direction: column;
@@ -76,6 +84,10 @@
 
 .product-card__icon-btn--active {
   color: var(--color-discount);
+}
+
+.product-card__icon-group .product-card__icon-btn:first-child.product-card__icon-btn--active {
+  color: var(--color-secondary);
 }
 
 .product-card__body {
@@ -180,5 +192,9 @@
     width: 100%;
     height: auto;
     aspect-ratio: 1 / 1;
+  }
+
+  .product-card__hover-content {
+    opacity: 1;
   }
 }

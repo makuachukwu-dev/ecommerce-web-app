@@ -1,19 +1,16 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { useGetProductsQuery } from '../features/products/productsApi'
 import ProductCard from '../components/ProductCard'
 import AddToBasketToast from '../components/AddToBasketToast'
 import type { Product } from '../types/product'
 import './ProductsPage.css'
 
-function ProductsPage() {
-  const { data, isLoading, isError } = useGetProductsQuery({ limit: 12 })
-  const [addedProduct, setAddedProduct] = useState<Product | null>(null)
+const PAGE_SIZE = 12
 
-  useEffect(() => {
-    if (!addedProduct) return
-    const timer = setTimeout(() => setAddedProduct(null), 3000)
-    return () => clearTimeout(timer)
-  }, [addedProduct])
+function ProductsPage() {
+  const { data, isLoading, isError } = useGetProductsQuery({ limit: 0 })
+  const [visibleCount, setVisibleCount] = useState(PAGE_SIZE)
+  const [addedProduct, setAddedProduct] = useState<Product | null>(null)
 
   if (isLoading) {
     return <div className="products-page__status">Loading products...</div>
@@ -21,6 +18,22 @@ function ProductsPage() {
 
   if (isError || !data) {
     return <div className="products-page__status">Failed to load products.</div>
+  }
+
+  const visibleProducts = data.products.slice(0, visibleCount)
+  const hasMore = visibleCount < data.products.length
+
+  const handleAdded = (product: Product) => {
+    setAddedProduct(product)
+    window.setTimeout(() => setAddedProduct(null), 3000)
+  }
+
+  const handleLoadMore = () => {
+    setVisibleCount((prev) => Math.min(prev + PAGE_SIZE, data.products.length))
+  }
+
+  const handleShowLess = () => {
+    setVisibleCount(PAGE_SIZE)
   }
 
   return (
@@ -35,9 +48,25 @@ function ProductsPage() {
       )}
       <h1 className="products-page__heading">Shop</h1>
       <div className="products-page__grid">
-        {data.products.map((product) => (
-          <ProductCard key={product.id} product={product} onAdded={setAddedProduct} />
+        {visibleProducts.map((product) => (
+          <ProductCard key={product.id} product={product} onAdded={handleAdded} />
         ))}
+      </div>
+      <div className="products-page__actions">
+        {hasMore && (
+          <button type="button" className="products-page__load-btn" onClick={handleLoadMore}>
+            Load More
+          </button>
+        )}
+        {!hasMore && visibleCount > PAGE_SIZE && (
+          <button
+            type="button"
+            className="products-page__load-btn products-page__load-btn--secondary"
+            onClick={handleShowLess}
+          >
+            Show Less
+          </button>
+        )}
       </div>
     </div>
   )
