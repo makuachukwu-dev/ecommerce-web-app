@@ -1,0 +1,32 @@
+.products-page {
+  max-width: 1140px;
+  margin: 0 auto;
+  padding: 40px 24px 80px;
+}
+
+.products-page__heading {
+  font-family: var(--font-heading);
+  font-size: 28px;
+  font-weight: 700;
+  margin-bottom: 32px;
+}
+
+.products-page__grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 24px;
+  justify-content: center;
+}
+
+.products-page__status {
+  padding: 60px 24px;
+  text-align: center;
+  font-family: var(--font-body);
+  color: var(--color-gray-mid);
+}
+
+@media (max-width: 600px) {
+  .products-page {
+    padding: 24px 16px 60px;
+  }
+}
