@@ -1,0 +1,138 @@
+.hero {
+  max-width: 1140px;
+  margin: 0 auto;
+  padding: 40px 24px;
+}
+
+.hero__grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.hero__tile {
+  position: relative;
+  border-radius: var(--radius-card);
+  overflow: hidden;
+  background-size: cover;
+  background-position: center;
+}
+
+.hero__tile--large {
+  min-height: 580px;
+}
+
+.hero__right {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.hero__tile--wide {
+  min-height: 280px;
+}
+
+.hero__right-bottom {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  flex: 1;
+}
+
+.hero__right-bottom .hero__tile {
+  min-height: 280px;
+}
+
+.hero__tile-pink {
+  background-color: #F3E1E1;
+}
+
+.hero__tile-gray {
+  background-color: #EBF0F3;
+}
+
+.hero__tile-blue {
+  background-color: #DBE4E9;
+}
+
+.hero__tile--cover {
+  background-size: cover;
+  background-position: center;
+}
+
+.hero__tile-image {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  height: 85%;
+  width: auto;
+  max-width: 90%;
+  object-fit: contain;
+}
+
+.hero__tile-image--hang {
+  top: 0;
+  height: 95%;
+  transform: translateX(-50%);
+}
+
+.hero__tile-content {
+  position: relative;
+  z-index: 1;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.hero__tile-badge {
+  font-family: var(--font-heading);
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 24px;
+  letter-spacing: 0.2px;
+  color: var(--color-success);
+}
+
+.hero__tile-heading {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  color: var(--color-text);
+}
+
+.hero__tile-heading--large {
+  font-size: 40px;
+  line-height: 50px;
+  letter-spacing: 0.2px;
+}
+
+.hero__tile-heading:not(.hero__tile-heading--large) {
+  font-size: 24px;
+  line-height: 32px;
+  letter-spacing: 0.1px;
+}
+
+.hero__tile-link {
+  font-family: var(--font-heading);
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 24px;
+  color: var(--color-text);
+  text-decoration: underline;
+  width: fit-content;
+}
+
+@media (max-width: 768px) {
+  .hero__grid {
+    grid-template-columns: 1fr;
+  }
+
+  .hero__tile--large {
+    min-height: 320px;
+  }
+
+  .hero__right-bottom {
+    grid-template-columns: 1fr;
+  }
+}

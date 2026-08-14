@@ -1,17 +1,16 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import TopBar from './components/TopBar'
 import Header from './components/Header'
-import ProductsPage from './pages/ProductsPage'
-import CartPage from './pages/CartPage'
+import Hero from './sections/Hero'
+import Bestsellers from './sections/Bestsellers'
 
 function App() {
   return (
-    <BrowserRouter>
+    <div className="app">
+      <TopBar />
       <Header />
-      <Routes>
-        <Route path="/" element={<ProductsPage />} />
-        <Route path="/cart" element={<CartPage />} />
-      </Routes>
-    </BrowserRouter>
+      <Hero />
+      <Bestsellers />
+    </div>
   )
 }
 
