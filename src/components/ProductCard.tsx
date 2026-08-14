@@ -1,6 +1,8 @@
 import type { Product } from '../types/product'
 import './ProductCard.css'
 
+const PALETTE = ['#F3E1E1', '#EBF0F3', '#DBE4E9', '#E7F0ED', '#E8F3FB']
+
 interface ProductCardProps {
   product: Product
 }
@@ -8,10 +10,11 @@ interface ProductCardProps {
 function ProductCard({ product }: ProductCardProps) {
   const hasDiscount = product.discountPercentage > 0
   const discountedPrice = product.price - (product.price * product.discountPercentage) / 100
+  const bgColor = PALETTE[product.id % PALETTE.length]
 
   return (
     <div className="product-card">
-      <div className="product-card__image-wrap">
+      <div className="product-card__image-wrap" style={{ backgroundColor: bgColor }}>
         <img src={product.thumbnail} alt={product.title} className="product-card__image" />
       </div>
       <div className="product-card__body">

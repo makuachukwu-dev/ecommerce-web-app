@@ -60,12 +60,7 @@
 }
 
 @media (max-width: 900px) {
-  .top-bar__left,
-  .top-bar__right {
+  .top-bar {
     display: none;
-  }
-
-  .top-bar__inner {
-    justify-content: center;
   }
 }
