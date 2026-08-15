@@ -58,26 +58,8 @@
 }
 
 .header__icon-btn {
-  position: relative;
   color: var(--color-text);
   display: flex;
-}
-
-.header__icon-count {
-  position: absolute;
-  top: -8px;
-  right: -8px;
-  background-color: var(--color-primary);
-  color: var(--color-white);
-  font-family: var(--font-body);
-  font-size: 9px;
-  font-weight: 600;
-  width: 15px;
-  height: 15px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
 }
 
 .header__menu-toggle {
