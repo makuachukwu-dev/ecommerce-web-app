@@ -1,75 +1,66 @@
-# React + TypeScript + Vite
+# Bandage — E-Commerce Landing Page
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Project Overview
 
-Currently, two official plugins are available:
+This is a fully responsive e-commerce landing page built with React, TypeScript,
+Redux Toolkit, and RTK Query, using the provided Figma design as guide. The page includes
+a hero banner, a Bestseller Products section that fetches live data from the
+DummyJSON API, a services section, featured posts,
+customer testimonial, a call-to-action banner, and a footer.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+The project was initially the shopping cart page as seen in the brief. During the Q&A session, we were asked to build just the landing page. See "Assumptions & Implementation Notes" below for more detail.
 
-## React Compiler
+## Installation
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+1. Clone the repository:
 
-## Expanding the ESLint configuration
+   git clone https://github.com/makuachukwu-dev/ecommerce-web-app.git
+   cd ecommerce-web-app-Makua
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+2. Install dependencies:
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+   npm install
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+## Running Locally
 
-```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+npm run dev
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+The app will be available at `http://localhost:5173`.
 
-```
+## Build & Deployment
+
+To create a production build:
+
+
+npm run build
+
+This runs a TypeScript check followed by a Vite production build, which produces the dist folder.
+
+This project is deployed on Netlify, with automatic deployments triggered on
+every push to the branch. 
+
+**Live site:** [https://melodious-monstera-4694e5.netlify.app/]
+
+## Assumptions & Implementation Notes
+
+- The original written brief described a shopping cart page task. After a
+  call with the instructor, we were asked to build the landing page only
+  only the landing page shown in the Figma design. Earlier commit history
+  reflects the original cart-page work before this correction.
+- The Bestseller Products section uses the card style shown directly in
+  the landing page Figma design that was provided(image, category, title, price) instead of
+  more detailed card design from a separate Product Card Figma file. This was to ensyre the design matches the figma file.
+- Product images returned by the DummyJSON API have plain white backgrounds, therefore
+  a rotating background color palette gotten from existing colours in the design was added behind each product so that the cards will be visible.
+- Shipping/pricing logic beyond what's shown in the Figma (e.g. discount
+  percentages) reflects the real values returned by the DummyJSON API.
+
+## Tech Stack
+
+- React + TypeScript (Vite)
+- Redux Toolkit & RTK Query
+- Vanilla CSS
+- Netlify (deployment)
