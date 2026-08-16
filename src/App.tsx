@@ -4,6 +4,9 @@ import Hero from './sections/Hero'
 import Bestsellers from './sections/Bestsellers'
 import BestServices from './sections/BestServices'
 import FeaturedPosts from './sections/FeaturedPosts'
+import Testimonials from './sections/Testimonials'
+import CtaBanner from './sections/CtaBanner'
+import Footer from './sections/Footer'
 
 function App() {
   return (
@@ -14,6 +17,9 @@ function App() {
       <Bestsellers />
       <BestServices />
       <FeaturedPosts />
+      <Testimonials />
+      <CtaBanner />
+      <Footer />
     </div>
   )
 }
